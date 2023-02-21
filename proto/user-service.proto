@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package user;
+
+message User {
+    string id             = 1;
+    string name           = 2;
+    string email          = 3;
+    string password_hash  = 4;
+    repeated string roles = 5;
+}
+
+message UserRequest {
+    User user = 1;
+}
+
+message UserList {
+    repeated User users = 1;
+}
+
+message UserByEmailRequest {
+    string email = 1;
+}
+
+
+service UserService {
+    rpc CreateUser(UserRequest) returns (User) {}
+    rpc GetUserByEmail(UserByEmailRequest) returns (User) {}
+    rpc UpdateUser(UserRequest) returns (User) {}
+    rpc DeleteUser(User) returns (User) {}
+    rpc ListUsers(User) returns (UserList) {}
+}
