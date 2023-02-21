@@ -1,2 +1,2 @@
 [workspace]
-members = ["terpy-user", "core"]
+members = ["terpy-user", "prostgen"]

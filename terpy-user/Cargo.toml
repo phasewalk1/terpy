@@ -14,7 +14,7 @@ tonic = "0.8.3"
 tokio = { version = "*", features = ["macros", "rt-multi-thread"] }
 
 [dependencies.terpy-core]
-path = "../core"
+path = "../prostgen"
 
 [build-dependencies]
 tonic-build = "*"
