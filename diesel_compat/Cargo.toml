@@ -1,0 +1,13 @@
+[package]
+name = "sqltypes"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+diesel = { version = "2.0.2", features = ["postgres", "chrono", "r2d2"] }
+serde = { version = "1.0.147", features = ["derive"] }
+
+[dependencies.prostgen]
+path = "../prostgen"

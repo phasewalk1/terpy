@@ -1,32 +1,30 @@
 syntax = "proto3";
-
 package user;
 
+import "google/protobuf/empty.proto";
+
 message User {
-    string id             = 1;
-    string name           = 2;
-    string email          = 3;
-    string password_hash  = 4;
-    repeated string roles = 5;
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string password_hash = 4;
 }
 
-message UserRequest {
-    User user = 1;
+message NewUser {
+  string name = 1;
+  string email = 2;
+  string password_hash = 3;
 }
 
-message UserList {
-    repeated User users = 1;
-}
-
-message UserByEmailRequest {
-    string email = 1;
-}
-
+message UserByEmailRequest { string email = 1; }
+message UserByNameRequest { string name = 1; }
+message UpdateUserRequest { User user = 1; }
+message DeleteUserRequest { string id = 1; }
 
 service UserService {
-    rpc CreateUser(UserRequest) returns (User) {}
-    rpc GetUserByEmail(UserByEmailRequest) returns (User) {}
-    rpc UpdateUser(UserRequest) returns (User) {}
-    rpc DeleteUser(User) returns (User) {}
-    rpc ListUsers(User) returns (UserList) {}
+  rpc CreateUser(NewUser) returns (User);
+  rpc UserByEmail(UserByEmailRequest) returns (User);
+  rpc UserByName(UserByNameRequest) returns (User);
+  rpc UpdateUser(UpdateUserRequest) returns (User);
+  rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty);
 }

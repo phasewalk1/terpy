@@ -10,22 +10,17 @@ pub struct User {
     pub email: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
     pub password_hash: ::prost::alloc::string::String,
-    #[prost(string, repeated, tag = "5")]
-    pub roles: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct UserRequest {
-    #[prost(message, optional, tag = "1")]
-    pub user: ::core::option::Option<User>,
-}
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct UserList {
-    #[prost(message, repeated, tag = "1")]
-    pub users: ::prost::alloc::vec::Vec<User>,
+pub struct NewUser {
+    #[prost(string, tag = "1")]
+    pub name: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub email: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub password_hash: ::prost::alloc::string::String,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -33,6 +28,27 @@ pub struct UserList {
 pub struct UserByEmailRequest {
     #[prost(string, tag = "1")]
     pub email: ::prost::alloc::string::String,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UserByNameRequest {
+    #[prost(string, tag = "1")]
+    pub name: ::prost::alloc::string::String,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UpdateUserRequest {
+    #[prost(message, optional, tag = "1")]
+    pub user: ::core::option::Option<User>,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteUserRequest {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
 }
 /// Generated client implementations.
 pub mod user_service_client {
@@ -105,7 +121,7 @@ pub mod user_service_client {
         }
         pub async fn create_user(
             &mut self,
-            request: impl tonic::IntoRequest<super::UserRequest>,
+            request: impl tonic::IntoRequest<super::NewUser>,
         ) -> Result<tonic::Response<super::User>, tonic::Status> {
             self.inner
                 .ready()
@@ -122,7 +138,7 @@ pub mod user_service_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn get_user_by_email(
+        pub async fn user_by_email(
             &mut self,
             request: impl tonic::IntoRequest<super::UserByEmailRequest>,
         ) -> Result<tonic::Response<super::User>, tonic::Status> {
@@ -137,13 +153,32 @@ pub mod user_service_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/user.UserService/GetUserByEmail",
+                "/user.UserService/UserByEmail",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn user_by_name(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UserByNameRequest>,
+        ) -> Result<tonic::Response<super::User>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/user.UserService/UserByName",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn update_user(
             &mut self,
-            request: impl tonic::IntoRequest<super::UserRequest>,
+            request: impl tonic::IntoRequest<super::UpdateUserRequest>,
         ) -> Result<tonic::Response<super::User>, tonic::Status> {
             self.inner
                 .ready()
@@ -162,8 +197,8 @@ pub mod user_service_client {
         }
         pub async fn delete_user(
             &mut self,
-            request: impl tonic::IntoRequest<super::User>,
-        ) -> Result<tonic::Response<super::User>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::DeleteUserRequest>,
+        ) -> Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -179,25 +214,6 @@ pub mod user_service_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn list_users(
-            &mut self,
-            request: impl tonic::IntoRequest<super::User>,
-        ) -> Result<tonic::Response<super::UserList>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/user.UserService/ListUsers",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
     }
 }
 /// Generated server implementations.
@@ -209,24 +225,24 @@ pub mod user_service_server {
     pub trait UserService: Send + Sync + 'static {
         async fn create_user(
             &self,
-            request: tonic::Request<super::UserRequest>,
+            request: tonic::Request<super::NewUser>,
         ) -> Result<tonic::Response<super::User>, tonic::Status>;
-        async fn get_user_by_email(
+        async fn user_by_email(
             &self,
             request: tonic::Request<super::UserByEmailRequest>,
         ) -> Result<tonic::Response<super::User>, tonic::Status>;
+        async fn user_by_name(
+            &self,
+            request: tonic::Request<super::UserByNameRequest>,
+        ) -> Result<tonic::Response<super::User>, tonic::Status>;
         async fn update_user(
             &self,
-            request: tonic::Request<super::UserRequest>,
+            request: tonic::Request<super::UpdateUserRequest>,
         ) -> Result<tonic::Response<super::User>, tonic::Status>;
         async fn delete_user(
             &self,
-            request: tonic::Request<super::User>,
-        ) -> Result<tonic::Response<super::User>, tonic::Status>;
-        async fn list_users(
-            &self,
-            request: tonic::Request<super::User>,
-        ) -> Result<tonic::Response<super::UserList>, tonic::Status>;
+            request: tonic::Request<super::DeleteUserRequest>,
+        ) -> Result<tonic::Response<()>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct UserServiceServer<T: UserService> {
@@ -290,7 +306,7 @@ pub mod user_service_server {
                 "/user.UserService/CreateUser" => {
                     #[allow(non_camel_case_types)]
                     struct CreateUserSvc<T: UserService>(pub Arc<T>);
-                    impl<T: UserService> tonic::server::UnaryService<super::UserRequest>
+                    impl<T: UserService> tonic::server::UnaryService<super::NewUser>
                     for CreateUserSvc<T> {
                         type Response = super::User;
                         type Future = BoxFuture<
@@ -299,7 +315,7 @@ pub mod user_service_server {
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::UserRequest>,
+                            request: tonic::Request<super::NewUser>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move { (*inner).create_user(request).await };
@@ -323,13 +339,13 @@ pub mod user_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/user.UserService/GetUserByEmail" => {
+                "/user.UserService/UserByEmail" => {
                     #[allow(non_camel_case_types)]
-                    struct GetUserByEmailSvc<T: UserService>(pub Arc<T>);
+                    struct UserByEmailSvc<T: UserService>(pub Arc<T>);
                     impl<
                         T: UserService,
                     > tonic::server::UnaryService<super::UserByEmailRequest>
-                    for GetUserByEmailSvc<T> {
+                    for UserByEmailSvc<T> {
                         type Response = super::User;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
@@ -341,7 +357,7 @@ pub mod user_service_server {
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move {
-                                (*inner).get_user_by_email(request).await
+                                (*inner).user_by_email(request).await
                             };
                             Box::pin(fut)
                         }
@@ -351,7 +367,47 @@ pub mod user_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = GetUserByEmailSvc(inner);
+                        let method = UserByEmailSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/user.UserService/UserByName" => {
+                    #[allow(non_camel_case_types)]
+                    struct UserByNameSvc<T: UserService>(pub Arc<T>);
+                    impl<
+                        T: UserService,
+                    > tonic::server::UnaryService<super::UserByNameRequest>
+                    for UserByNameSvc<T> {
+                        type Response = super::User;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::UserByNameRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).user_by_name(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = UserByNameSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -366,7 +422,9 @@ pub mod user_service_server {
                 "/user.UserService/UpdateUser" => {
                     #[allow(non_camel_case_types)]
                     struct UpdateUserSvc<T: UserService>(pub Arc<T>);
-                    impl<T: UserService> tonic::server::UnaryService<super::UserRequest>
+                    impl<
+                        T: UserService,
+                    > tonic::server::UnaryService<super::UpdateUserRequest>
                     for UpdateUserSvc<T> {
                         type Response = super::User;
                         type Future = BoxFuture<
@@ -375,7 +433,7 @@ pub mod user_service_server {
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::UserRequest>,
+                            request: tonic::Request<super::UpdateUserRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move { (*inner).update_user(request).await };
@@ -402,16 +460,18 @@ pub mod user_service_server {
                 "/user.UserService/DeleteUser" => {
                     #[allow(non_camel_case_types)]
                     struct DeleteUserSvc<T: UserService>(pub Arc<T>);
-                    impl<T: UserService> tonic::server::UnaryService<super::User>
+                    impl<
+                        T: UserService,
+                    > tonic::server::UnaryService<super::DeleteUserRequest>
                     for DeleteUserSvc<T> {
-                        type Response = super::User;
+                        type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::User>,
+                            request: tonic::Request<super::DeleteUserRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move { (*inner).delete_user(request).await };
@@ -424,42 +484,6 @@ pub mod user_service_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = DeleteUserSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/user.UserService/ListUsers" => {
-                    #[allow(non_camel_case_types)]
-                    struct ListUsersSvc<T: UserService>(pub Arc<T>);
-                    impl<T: UserService> tonic::server::UnaryService<super::User>
-                    for ListUsersSvc<T> {
-                        type Response = super::UserList;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::User>,
-                        ) -> Self::Future {
-                            let inner = self.0.clone();
-                            let fut = async move { (*inner).list_users(request).await };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = ListUsersSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

@@ -3,7 +3,9 @@ name = "user"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "user"
+path = "src/lib.rs"
 
 [dependencies]
 futures = "0.3.26"
@@ -13,8 +15,5 @@ prost = "0.11.6"
 tonic = "0.8.3"
 tokio = { version = "*", features = ["macros", "rt-multi-thread"] }
 
-[dependencies.terpy-core]
+[dependencies.prostgen]
 path = "../prostgen"
-
-[build-dependencies]
-tonic-build = "*"
