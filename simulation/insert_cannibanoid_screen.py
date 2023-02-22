@@ -29,7 +29,6 @@ data = {
 }
 
 response = requests.post(url, headers=headers, data=json.dumps(data))
-
 assert response.status_code == 200
 print("POST request successful")
 print(response.json())
