@@ -1,0 +1,5 @@
+[print-schema]
+file = "src/auto.rs"
+
+[migrations_directory]
+dir = "../migrations"

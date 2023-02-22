@@ -1,0 +1,57 @@
+syntax = "proto3";
+package grower;
+
+message CannibanoidScreen {
+  float cbc = 1;
+  float cbd = 2;
+  float cbda = 3;
+  float cbdv = 4;
+  float cbg = 5;
+  float cbga = 6;
+  float cbn = 7;
+  float d9thc = 8;
+  float d8thc = 9;
+  float thcv = 10;
+  float thca = 11;
+}
+
+message TerpenoidScreen {
+  float a_bisabolol = 1;
+  float a_humulene = 2;
+  float a_pinene = 3;
+  float a_terpinene = 4;
+  float b_caryophyllene = 5;
+  float b_myrcene = 6;
+  float b_pinene = 7;
+  float camphene = 8;
+  float caryophyllene_oxide = 9;
+  float delta_3_carene = 10;
+  float gamma_terpinene = 11;
+  float geraniol = 12;
+  float guaiol = 13;
+  float isopulegol = 14;
+  float linalool = 15;
+  float trans_nerolidol = 16;
+  float ocimene = 17;
+  float p_cymene = 18;
+  float eucalyptol = 19;
+  float terpinolene = 20;
+}
+
+message TestResults {
+  string id = 1;
+  CannibanoidScreen cannibanoid_screen = 2;
+  TerpenoidScreen terpenoid_screen = 3;
+}
+
+message NewTestResults {
+  CannibanoidScreen cannibanoid_screen = 1;
+  TerpenoidScreen terpenoid_screen = 2;
+}
+
+message TestResultById { string id = 1; }
+
+service Grower {
+  rpc CreateTestResults(NewTestResults) returns (TestResults);
+  rpc GetTestResults(TestResultById) returns (TestResults);
+}

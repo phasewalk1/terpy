@@ -1,5 +1,6 @@
 use diesel_compat::{NewUserCompat, UserCompat};
-use prostgen::prostgen::*;
+use prostgen::user::user_service_server::UserService as UserServiceTrait;
+use prostgen::user::*;
 use tonic::{Request, Response, Status};
 
 pub mod prelude {

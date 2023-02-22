@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate rocket;
-use prostgen::prostgen::UserServiceClient;
-use prostgen::prostgen::{NewUser, User};
+use prostgen::user::user_service_client::UserServiceClient;
+use prostgen::user::{NewUser, User};
 use rocket::serde::json::Json;
 mod user_interceptor;
 

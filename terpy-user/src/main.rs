@@ -1,4 +1,4 @@
-use prostgen::prostgen::UserServiceServer;
+use prostgen::user::user_service_server::UserServiceServer;
 use tonic::transport::Server;
 use user::prelude::*;
 

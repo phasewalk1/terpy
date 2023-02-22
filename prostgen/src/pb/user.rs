@@ -8,7 +8,9 @@ pub struct User {
     pub name: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub email: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
+    #[prost(bool, tag = "4")]
+    pub is_grower: bool,
+    #[prost(string, tag = "5")]
     pub password_hash: ::prost::alloc::string::String,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -19,7 +21,9 @@ pub struct NewUser {
     pub name: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub email: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
+    #[prost(bool, tag = "3")]
+    pub is_grower: bool,
+    #[prost(string, tag = "4")]
     pub password_hash: ::prost::alloc::string::String,
 }
 #[derive(serde::Serialize, serde::Deserialize)]

@@ -1,0 +1,21 @@
+[package]
+name = "grower"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "grower"
+path = "src/lib.rs"
+
+[dependencies]
+futures = "0.3.26"
+log = "0.4.17"
+pretty_env_logger = "0.4.0"
+prost = "0.11.6"
+tonic = "0.8.3"
+tokio = { version = "*", features = ["macros", "rt-multi-thread"] }
+
+[dependencies.prostgen]
+path = "../prostgen"
+[dependencies.diesel_compat]
+path = "../diesel_compat"

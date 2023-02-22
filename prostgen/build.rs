@@ -8,7 +8,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]")
         .out_dir("src/pb")
         .compile(
-            &[Path::new(PROTO).join("user-service.proto")],
+            &[
+                Path::new(PROTO).join("user-service.proto"),
+                Path::new(PROTO).join("grower-service.proto"),
+            ],
             &[Path::new(PROTO)],
         )?;
     return Ok(());

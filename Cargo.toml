@@ -1,2 +1,8 @@
 [workspace]
-members = ["terpy-user", "prostgen", "gateway", "diesel_compat"]
+members = [
+  "terpy-user",
+  "terpy-grower",
+  "prostgen",
+  "gateway",
+  "diesel_compat",
+]
