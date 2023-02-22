@@ -4,5 +4,5 @@ members = [
   "terpy-grower",
   "prostgen",
   "gateway",
-  "diesel_compat",
+  "orm",
 ]

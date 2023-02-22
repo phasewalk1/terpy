@@ -1,8 +1,5 @@
-use diesel_compat::models::grower::{
-    InsertableCannibanoidScreen,
-    InsertableTerpenoidScreen,
-};
 use prostgen::services::Grower;
+use terpy_orm::{prelude_grower::*, prelude_pool::POOL_T};
 use tonic::{Request, Response, Status};
 
 #[derive(Debug, Default)]
@@ -10,12 +7,13 @@ pub struct GrowerService {}
 
 #[tonic::async_trait]
 impl Grower for GrowerService {
+    /// (RPC) Create a new cannibanoid screen
     async fn create_cannibanoid_screen(
         &self,
         request: Request<prostgen::grower::NewCannibanoidScreen>,
     ) -> Result<Response<prostgen::grower::CannibanoidScreen>, Status> {
         let screen: InsertableCannibanoidScreen = request.into_inner().into();
-        let maybe_conn = diesel_compat::db::pool::tonic_wrapper::TONIC_POOL.try_connect();
+        let maybe_conn = POOL_T.try_connect();
         match maybe_conn {
             Ok(conn) => {
                 if let Ok(res) = screen.insert(conn) {
@@ -28,6 +26,7 @@ impl Grower for GrowerService {
         }
     }
 
+    /// (RPC) Create a new terpenoid screen
     async fn create_terpenoid_screen(
         &self,
         request: Request<prostgen::grower::NewTerpenoidScreen>,
@@ -36,6 +35,7 @@ impl Grower for GrowerService {
         todo!()
     }
 
+    /// (RPC) Get a cannibanoid screen by id
     async fn get_cannibanoid_screen(
         &self,
         request: Request<prostgen::grower::CannibanoidScreenById>,
@@ -43,6 +43,7 @@ impl Grower for GrowerService {
         todo!()
     }
 
+    /// (RPC) Get a terpenoid screen by id
     async fn get_terpenoid_screen(
         &self,
         request: Request<prostgen::grower::TerpenoidScreenById>,
@@ -50,6 +51,7 @@ impl Grower for GrowerService {
         todo!()
     }
 
+    /// (RPC) Create a new test result
     async fn create_test_results(
         &self,
         request: Request<prostgen::grower::NewTestResults>,
@@ -57,6 +59,7 @@ impl Grower for GrowerService {
         todo!()
     }
 
+    /// (RPC) Get a test result by id
     async fn get_test_results(
         &self,
         request: Request<prostgen::grower::TestResultById>,
@@ -64,6 +67,7 @@ impl Grower for GrowerService {
         todo!()
     }
 
+    /// (RPC) Assign a test result to a screen
     async fn assign_test_results(
         &self,
         request: Request<prostgen::grower::AssignTestResultsRequest>,

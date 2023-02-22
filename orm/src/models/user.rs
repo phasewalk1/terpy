@@ -1,10 +1,11 @@
-use crate::user_t;
+use crate::auto::users as user_t;
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
 pub use self::NewUser as InsertableUser;
 pub use self::User as SearchableUser;
 
+/// An ORM insertable user
 #[derive(Debug, Serialize, Deserialize, Insertable)]
 #[diesel(table_name = user_t)]
 pub struct NewUser<'u> {
@@ -14,6 +15,7 @@ pub struct NewUser<'u> {
     pub password_hash: &'u str,
 }
 
+/// An ORM searchable user
 #[derive(Debug, Serialize, Deserialize, Queryable)]
 #[diesel(table_name = user_t)]
 pub struct User {

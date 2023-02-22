@@ -1,0 +1,4 @@
+[alias]
+user-serve = "run --bin user-service 8076"
+grower-serve = "run --bin grower 8077"
+gateway = "run --bin gateway"

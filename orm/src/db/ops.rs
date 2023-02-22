@@ -1,10 +1,6 @@
-use super::PoolConn;
-use crate::models::user::{InsertableUser, SearchableUser};
-use crate::models::grower::{
-    InsertableCannibanoidScreen, SearchableCannibanoidScreen, 
-    InsertableTerpenoidScreen, SearchableTerpenoidScreen, InsertableTestResults, 
-    SearchableTestResults
-};
+use crate::prelude::*;
+use super::pooling::pool::PoolConn;
+use crate::auto::users as user_t;
 use diesel::prelude::*;
 
 impl<'u> InsertableUser<'u> {
@@ -12,7 +8,7 @@ impl<'u> InsertableUser<'u> {
     where
         T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
     {
-        let user: SearchableUser = diesel::insert_into(crate::user_t::table)
+        let user: SearchableUser = diesel::insert_into(user_t::table)
             .values(self)
             .get_result(&mut conn)?;
         return Ok(user.into());
@@ -26,8 +22,8 @@ impl SearchableUser {
     where
         T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
     {
-        let user: Option<SearchableUser> = crate::user_t::table
-            .filter(crate::user_t::email.eq(email))
+        let user: Option<SearchableUser> = user_t::table
+            .filter(user_t::email.eq(email))
             .first(&mut conn)
             .optional()?;
         return Ok(user);
@@ -40,8 +36,8 @@ impl SearchableUser {
     where
         T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
     {
-        let user: Option<SearchableUser> = crate::user_t::table
-            .filter(crate::user_t::name.eq(name))
+        let user: Option<SearchableUser> = user_t::table
+            .filter(user_t::name.eq(name))
             .first(&mut conn)
             .optional()?;
         return Ok(user);
@@ -54,8 +50,8 @@ impl SearchableUser {
     where
         T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
     {
-        let user: Option<SearchableUser> = crate::user_t::table
-            .filter(crate::user_t::id.eq(id))
+        let user: Option<SearchableUser> = user_t::table
+            .filter(user_t::id.eq(id))
             .first(&mut conn)
             .optional()?;
         return Ok(user);
@@ -67,12 +63,12 @@ impl SearchableUser {
     where
         T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
     {
-        let user: Option<SearchableUser> = crate::user_t::table
-            .filter(crate::user_t::id.eq(id))
+        let user: Option<SearchableUser> = user_t::table
+            .filter(user_t::id.eq(id))
             .first(&mut conn)
             .optional()?;
         if let Some(user) = user {
-            diesel::delete(crate::user_t::table.filter(crate::user_t::id.eq(id)))
+            diesel::delete(user_t::table.filter(user_t::id.eq(id)))
                 .execute(&mut conn)?;
             return Ok(Some(user));
         }
@@ -88,9 +84,10 @@ impl InsertableCannibanoidScreen {
     where
         T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
     {
-        let screen: SearchableCannibanoidScreen = diesel::insert_into(crate::auto::cannibanoid_screen_t::table)
-            .values(self)
-            .get_result(&mut conn)?;
+        let screen: SearchableCannibanoidScreen =
+            diesel::insert_into(crate::auto::cannibanoid_screen_t::table)
+                .values(self)
+                .get_result(&mut conn)?;
         return Ok(screen.into());
     }
 }
@@ -121,8 +118,11 @@ impl SearchableCannibanoidScreen {
             .first(&mut conn)
             .optional()?;
         if let Some(screen) = screen {
-            diesel::delete(crate::auto::cannibanoid_screen_t::table.filter(crate::auto::cannibanoid_screen_t::id.eq(id)))
-                .execute(&mut conn)?;
+            diesel::delete(
+                crate::auto::cannibanoid_screen_t::table
+                    .filter(crate::auto::cannibanoid_screen_t::id.eq(id)),
+            )
+            .execute(&mut conn)?;
             return Ok(Some(screen));
         }
         return Ok(None);
@@ -137,9 +137,10 @@ impl InsertableTerpenoidScreen {
     where
         T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
     {
-        let screen: SearchableTerpenoidScreen = diesel::insert_into(crate::auto::terpenoid_screen_t::table)
-            .values(self)
-            .get_result(&mut conn)?;
+        let screen: SearchableTerpenoidScreen =
+            diesel::insert_into(crate::auto::terpenoid_screen_t::table)
+                .values(self)
+                .get_result(&mut conn)?;
         return Ok(screen.into());
     }
 }
@@ -170,8 +171,11 @@ impl SearchableTerpenoidScreen {
             .first(&mut conn)
             .optional()?;
         if let Some(screen) = screen {
-            diesel::delete(crate::auto::terpenoid_screen_t::table.filter(crate::auto::terpenoid_screen_t::id.eq(id)))
-                .execute(&mut conn)?;
+            diesel::delete(
+                crate::auto::terpenoid_screen_t::table
+                    .filter(crate::auto::terpenoid_screen_t::id.eq(id)),
+            )
+            .execute(&mut conn)?;
             return Ok(Some(screen));
         }
         return Ok(None);
@@ -186,9 +190,10 @@ impl InsertableTestResults {
     where
         T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
     {
-        let results: SearchableTestResults = diesel::insert_into(crate::auto::test_results_t::table)
-            .values(self)
-            .get_result(&mut conn)?;
+        let results: SearchableTestResults =
+            diesel::insert_into(crate::auto::test_results_t::table)
+                .values(self)
+                .get_result(&mut conn)?;
         return Ok(results.into());
     }
 }
@@ -219,8 +224,10 @@ impl SearchableTestResults {
             .first(&mut conn)
             .optional()?;
         if let Some(results) = results {
-            diesel::delete(crate::auto::test_results_t::table.filter(crate::auto::test_results_t::id.eq(id)))
-                .execute(&mut conn)?;
+            diesel::delete(
+                crate::auto::test_results_t::table.filter(crate::auto::test_results_t::id.eq(id)),
+            )
+            .execute(&mut conn)?;
             return Ok(Some(results));
         }
         return Ok(None);

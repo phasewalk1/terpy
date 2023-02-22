@@ -4,17 +4,24 @@ use lazy_static::lazy_static;
 use std::env::var as env;
 
 lazy_static! {
+    /// The database URL.
     pub static ref DATABASE_URL: String = env("DATABASE_URL").expect("DATABASE_URL must be set");
 }
 
-pub fn init_pool() -> TerpDbPool {
+/// A Rocket-specific connection pool.
+#[allow(non_camel_case_types)]
+pub type ROCKET_POOL = TerpDbPool;
+
+/// Initialize a rocket-specific connection pool.
+pub fn init_pool() -> ROCKET_POOL {
     let mgr = diesel::r2d2::ConnectionManager::<diesel::pg::PgConnection>::new(&*DATABASE_URL);
-    return TerpDbPool::builder()
+    return ROCKET_POOL::builder()
         .max_size(10)
         .build(mgr)
         .expect("Failed to create pool.");
 }
 
+/// Rocket guard for a connection pool.
 pub struct RocketPoolGuard(pub r2d2::PooledConnection<ConnectionManager<diesel::pg::PgConnection>>);
 
 impl From<r2d2::PooledConnection<ConnectionManager<diesel::pg::PgConnection>>> for RocketPoolGuard {

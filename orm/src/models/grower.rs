@@ -1,6 +1,7 @@
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
+/// An ORM insertable cannibanoid screen
 #[derive(Debug, Deserialize, Serialize, Insertable)]
 #[diesel(table_name = crate::auto::cannibanoid_screen_t)]
 pub struct InsertableCannibanoidScreen {
@@ -52,6 +53,7 @@ impl From<prostgen::grower::NewCannibanoidScreen> for InsertableCannibanoidScree
     }
 }
 
+/// An ORM searchable cannibanoid screen
 #[derive(Debug, Deserialize, Serialize, Queryable)]
 #[diesel(table_name = crate::auto::cannibanoid_screen_t)]
 pub struct SearchableCannibanoidScreen {
@@ -141,6 +143,7 @@ impl From<prostgen::grower::CannibanoidScreen> for SearchableCannibanoidScreen {
     }
 }
 
+/// An ORM insertable terpenoid screen
 #[derive(Debug, Deserialize, Serialize, Insertable)]
 #[diesel(table_name = crate::auto::terpenoid_screen_t)]
 pub struct InsertableTerpenoidScreen {
@@ -193,11 +196,11 @@ impl From<prostgen::grower::NewTerpenoidScreen> for InsertableTerpenoidScreen {
             p_cymene: screen.p_cymene,
             eucalyptol: screen.eucalyptol,
             terpinolene: screen.terpinolene,
-        }
-
+        };
     }
 }
 
+/// An ORM searchable terpenoid screen
 #[derive(Debug, Deserialize, Serialize, Queryable)]
 #[diesel(table_name = crate::auto::terpenoid_screen_t)]
 pub struct SearchableTerpenoidScreen {
@@ -252,11 +255,11 @@ impl From<SearchableTerpenoidScreen> for prostgen::grower::TerpenoidScreen {
             p_cymene: screen.p_cymene,
             eucalyptol: screen.eucalyptol,
             terpinolene: screen.terpinolene,
-        }
-
+        };
     }
 }
 
+/// An ORM insertable test result
 #[derive(Debug, Deserialize, Serialize, Insertable)]
 #[diesel(table_name = crate::auto::test_results_t)]
 pub struct InsertableTestResults {
@@ -266,6 +269,7 @@ pub struct InsertableTestResults {
     pub terp: i32,
 }
 
+/// An ORM searchable test result
 #[derive(Debug, Deserialize, Serialize, Queryable)]
 #[diesel(table_name = crate::auto::test_results_t)]
 pub struct SearchableTestResults {

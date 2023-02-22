@@ -7,6 +7,14 @@ edition = "2021"
 name = "user"
 path = "src/lib.rs"
 
+[[bin]]
+name = "user-service"
+path = "src/bin/serve.rs"
+
+[[bin]]
+name = "user-client"
+path = "src/bin/client.rs"
+
 [dependencies]
 futures = "0.3.26"
 log = "0.4.17"
@@ -17,5 +25,5 @@ tokio = { version = "*", features = ["macros", "rt-multi-thread"] }
 
 [dependencies.prostgen]
 path = "../prostgen"
-[dependencies.diesel_compat]
-path = "../diesel_compat"
+[dependencies.terpy-orm]
+path = "../orm"

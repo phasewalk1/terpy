@@ -17,5 +17,5 @@ tokio = { version = "*", features = ["macros", "rt-multi-thread"] }
 
 [dependencies.prostgen]
 path = "../prostgen"
-[dependencies.diesel_compat]
-path = "../diesel_compat"
+[dependencies.terpy-orm]
+path = "../orm"
