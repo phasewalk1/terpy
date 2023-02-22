@@ -54,6 +54,13 @@ pub struct DeleteUserRequest {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
 }
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UserByIdRequest {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+}
 /// Generated client implementations.
 pub mod user_service_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
@@ -180,6 +187,25 @@ pub mod user_service_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        pub async fn user_by_id(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UserByIdRequest>,
+        ) -> Result<tonic::Response<super::User>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/user.UserService/UserById",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
         pub async fn update_user(
             &mut self,
             request: impl tonic::IntoRequest<super::UpdateUserRequest>,
@@ -238,6 +264,10 @@ pub mod user_service_server {
         async fn user_by_name(
             &self,
             request: tonic::Request<super::UserByNameRequest>,
+        ) -> Result<tonic::Response<super::User>, tonic::Status>;
+        async fn user_by_id(
+            &self,
+            request: tonic::Request<super::UserByIdRequest>,
         ) -> Result<tonic::Response<super::User>, tonic::Status>;
         async fn update_user(
             &self,
@@ -412,6 +442,44 @@ pub mod user_service_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = UserByNameSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/user.UserService/UserById" => {
+                    #[allow(non_camel_case_types)]
+                    struct UserByIdSvc<T: UserService>(pub Arc<T>);
+                    impl<
+                        T: UserService,
+                    > tonic::server::UnaryService<super::UserByIdRequest>
+                    for UserByIdSvc<T> {
+                        type Response = super::User;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::UserByIdRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).user_by_id(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = UserByIdSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

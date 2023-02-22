@@ -2,6 +2,9 @@ use crate::user_t;
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
+pub use self::NewUser as InsertableUser;
+pub use self::User as SearchableUser;
+
 #[derive(Debug, Serialize, Deserialize, Insertable)]
 #[diesel(table_name = user_t)]
 pub struct NewUser<'u> {
@@ -21,16 +24,13 @@ pub struct User {
     pub password_hash: String,
 }
 
-pub use self::NewUser as NewUserCompat;
-pub use self::User as UserCompat;
-
-impl<'u> From<prostgen::user::NewUser> for NewUserCompat<'u> {
+impl<'u> From<prostgen::user::NewUser> for InsertableUser<'u> {
     fn from(user: prostgen::user::NewUser) -> Self {
         let name: &mut str = Box::leak(user.name.into_boxed_str());
         let email: &mut str = Box::leak(user.email.into_boxed_str());
         let password_hash: &mut str = Box::leak(user.password_hash.into_boxed_str());
         let is_grower: bool = user.is_grower;
-        return NewUserCompat {
+        return InsertableUser {
             name,
             email,
             is_grower,
@@ -39,8 +39,8 @@ impl<'u> From<prostgen::user::NewUser> for NewUserCompat<'u> {
     }
 }
 
-impl From<UserCompat> for prostgen::user::User {
-    fn from(user: UserCompat) -> Self {
+impl From<SearchableUser> for prostgen::user::User {
+    fn from(user: SearchableUser) -> Self {
         return prostgen::user::User {
             id: user.id.to_string(),
             name: user.name,

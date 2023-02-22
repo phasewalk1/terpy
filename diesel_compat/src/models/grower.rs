@@ -71,6 +71,41 @@ pub struct SearchableCannibanoidScreen {
     pub thca: f32,
 }
 
+impl From<SearchableCannibanoidScreen> for prostgen::grower::CannibanoidScreen {
+    fn from(screen: SearchableCannibanoidScreen) -> Self {
+        let id: String = screen.id.to_string();
+        let grower_id: String = screen.grower_id;
+        let batch_id: String = screen.batch_id;
+        let cbc: f32 = screen.cbc;
+        let cbd: f32 = screen.cbd;
+        let cbda: f32 = screen.cbda;
+        let cbdv: f32 = screen.cbdv;
+        let cbg: f32 = screen.cbg;
+        let cbga: f32 = screen.cbga;
+        let cbn: f32 = screen.cbn;
+        let d9thc: f32 = screen.d9thc;
+        let d8thc: f32 = screen.d8thc;
+        let thcv: f32 = screen.thcv;
+        let thca: f32 = screen.thca;
+        return Self {
+            id,
+            grower_id,
+            batch_id,
+            cbc,
+            cbd,
+            cbda,
+            cbdv,
+            cbg,
+            cbga,
+            cbn,
+            d9thc,
+            d8thc,
+            thcv,
+            thca,
+        };
+    }
+}
+
 impl From<prostgen::grower::CannibanoidScreen> for SearchableCannibanoidScreen {
     fn from(screen: prostgen::grower::CannibanoidScreen) -> Self {
         let id: i32 = screen.id.parse().unwrap();
@@ -225,18 +260,18 @@ impl From<SearchableTerpenoidScreen> for prostgen::grower::TerpenoidScreen {
 #[derive(Debug, Deserialize, Serialize, Insertable)]
 #[diesel(table_name = crate::auto::test_results_t)]
 pub struct InsertableTestResults {
-    grower_id: String,
-    batch_id: String,
-    cann: i32,
-    terp: i32,
+    pub grower_id: String,
+    pub batch_id: String,
+    pub cann: i32,
+    pub terp: i32,
 }
 
 #[derive(Debug, Deserialize, Serialize, Queryable)]
 #[diesel(table_name = crate::auto::test_results_t)]
 pub struct SearchableTestResults {
-    id: i32,
-    grower_id: String,
-    batch_id: String,
-    cann: i32,
-    terp: i32,
+    pub id: i32,
+    pub grower_id: String,
+    pub batch_id: String,
+    pub cann: i32,
+    pub terp: i32,
 }

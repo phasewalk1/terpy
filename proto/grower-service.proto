@@ -34,6 +34,8 @@ message NewCannibanoidScreen {
   float thca = 13;
 }
 
+message CannibanoidScreenById { string id = 1; }
+
 message TerpenoidScreen {
   string id = 1;
   string grower_id = 2;
@@ -85,6 +87,8 @@ message NewTerpenoidScreen {
   float terpinolene = 22;
 }
 
+message TerpenoidScreenById { string id = 1; }
+
 message TestResults {
   string id = 1;
   string grower_id = 2;
@@ -110,6 +114,10 @@ message AssignTestResultsRequest {
 message TestResultById { string id = 1; }
 
 service Grower {
+  rpc CreateCannibanoidScreen(NewCannibanoidScreen) returns (CannibanoidScreen);
+  rpc GetCannibanoidScreen(CannibanoidScreenById) returns (CannibanoidScreen);
+  rpc CreateTerpenoidScreen(NewTerpenoidScreen) returns (TerpenoidScreen);
+  rpc GetTerpenoidScreen(TerpenoidScreenById) returns (TerpenoidScreen);
   rpc CreateTestResults(NewTestResults) returns (TestResults);
   rpc AssignTestResults(AssignTestResultsRequest) returns (TestResults);
   rpc GetTestResults(TestResultById) returns (TestResults);

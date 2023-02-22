@@ -65,6 +65,13 @@ pub struct NewCannibanoidScreen {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CannibanoidScreenById {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TerpenoidScreen {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
@@ -161,6 +168,13 @@ pub struct NewTerpenoidScreen {
     pub eucalyptol: f32,
     #[prost(float, tag = "22")]
     pub terpinolene: f32,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TerpenoidScreenById {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -279,6 +293,82 @@ pub mod grower_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
+        pub async fn create_cannibanoid_screen(
+            &mut self,
+            request: impl tonic::IntoRequest<super::NewCannibanoidScreen>,
+        ) -> Result<tonic::Response<super::CannibanoidScreen>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/CreateCannibanoidScreen",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn get_cannibanoid_screen(
+            &mut self,
+            request: impl tonic::IntoRequest<super::CannibanoidScreenById>,
+        ) -> Result<tonic::Response<super::CannibanoidScreen>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/GetCannibanoidScreen",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn create_terpenoid_screen(
+            &mut self,
+            request: impl tonic::IntoRequest<super::NewTerpenoidScreen>,
+        ) -> Result<tonic::Response<super::TerpenoidScreen>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/CreateTerpenoidScreen",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn get_terpenoid_screen(
+            &mut self,
+            request: impl tonic::IntoRequest<super::TerpenoidScreenById>,
+        ) -> Result<tonic::Response<super::TerpenoidScreen>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/GetTerpenoidScreen",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
         pub async fn create_test_results(
             &mut self,
             request: impl tonic::IntoRequest<super::NewTestResults>,
@@ -345,6 +435,22 @@ pub mod grower_server {
     /// Generated trait containing gRPC methods that should be implemented for use with GrowerServer.
     #[async_trait]
     pub trait Grower: Send + Sync + 'static {
+        async fn create_cannibanoid_screen(
+            &self,
+            request: tonic::Request<super::NewCannibanoidScreen>,
+        ) -> Result<tonic::Response<super::CannibanoidScreen>, tonic::Status>;
+        async fn get_cannibanoid_screen(
+            &self,
+            request: tonic::Request<super::CannibanoidScreenById>,
+        ) -> Result<tonic::Response<super::CannibanoidScreen>, tonic::Status>;
+        async fn create_terpenoid_screen(
+            &self,
+            request: tonic::Request<super::NewTerpenoidScreen>,
+        ) -> Result<tonic::Response<super::TerpenoidScreen>, tonic::Status>;
+        async fn get_terpenoid_screen(
+            &self,
+            request: tonic::Request<super::TerpenoidScreenById>,
+        ) -> Result<tonic::Response<super::TerpenoidScreen>, tonic::Status>;
         async fn create_test_results(
             &self,
             request: tonic::Request<super::NewTestResults>,
@@ -417,6 +523,166 @@ pub mod grower_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
+                "/grower.Grower/CreateCannibanoidScreen" => {
+                    #[allow(non_camel_case_types)]
+                    struct CreateCannibanoidScreenSvc<T: Grower>(pub Arc<T>);
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::NewCannibanoidScreen>
+                    for CreateCannibanoidScreenSvc<T> {
+                        type Response = super::CannibanoidScreen;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::NewCannibanoidScreen>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).create_cannibanoid_screen(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = CreateCannibanoidScreenSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/grower.Grower/GetCannibanoidScreen" => {
+                    #[allow(non_camel_case_types)]
+                    struct GetCannibanoidScreenSvc<T: Grower>(pub Arc<T>);
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::CannibanoidScreenById>
+                    for GetCannibanoidScreenSvc<T> {
+                        type Response = super::CannibanoidScreen;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::CannibanoidScreenById>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).get_cannibanoid_screen(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = GetCannibanoidScreenSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/grower.Grower/CreateTerpenoidScreen" => {
+                    #[allow(non_camel_case_types)]
+                    struct CreateTerpenoidScreenSvc<T: Grower>(pub Arc<T>);
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::NewTerpenoidScreen>
+                    for CreateTerpenoidScreenSvc<T> {
+                        type Response = super::TerpenoidScreen;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::NewTerpenoidScreen>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).create_terpenoid_screen(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = CreateTerpenoidScreenSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/grower.Grower/GetTerpenoidScreen" => {
+                    #[allow(non_camel_case_types)]
+                    struct GetTerpenoidScreenSvc<T: Grower>(pub Arc<T>);
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::TerpenoidScreenById>
+                    for GetTerpenoidScreenSvc<T> {
+                        type Response = super::TerpenoidScreen;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::TerpenoidScreenById>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).get_terpenoid_screen(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = GetTerpenoidScreenSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 "/grower.Grower/CreateTestResults" => {
                     #[allow(non_camel_case_types)]
                     struct CreateTestResultsSvc<T: Grower>(pub Arc<T>);

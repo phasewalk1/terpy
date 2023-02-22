@@ -58,8 +58,8 @@ table! {
         id -> Int4,
         grower_id -> Varchar,
         batch_id -> Varchar,
-        cann -> Nullable<Int4>,
-        terp -> Nullable<Int4>,
+        cann -> Int4,
+        terp -> Int4,
     }
 }
 

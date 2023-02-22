@@ -43,6 +43,6 @@ CREATE TABLE test_results (
   id SERIAL PRIMARY KEY,
   grower_id VARCHAR(255) NOT NULL,
   batch_id VARCHAR(255) NOT NULL,
-  cann INTEGER REFERENCES cannibanoid_screen(id),
-  terp INTEGER REFERENCES terpenoid_screen(id)
+  cann INTEGER NOT NULL REFERENCES cannibanoid_screen(id),
+  terp INTEGER NOT NULL REFERENCES terpenoid_screen(id)
 );
