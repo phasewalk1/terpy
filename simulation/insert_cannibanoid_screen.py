@@ -2,11 +2,10 @@ import os
 import requests
 import json
 
-
 service_addr = os.environ.get("GATEWAY_ADDR")
 
 if service_addr is None:
-    raise ValueError("GROWER_SERVICE_ADDR environment variable is not set")
+    raise ValueError("GATEWAY_ADDR environment variable is not set")
 
 
 url = f"http://{service_addr}/grower"
