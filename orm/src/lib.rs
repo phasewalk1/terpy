@@ -26,7 +26,7 @@ pub mod prelude_grower {
 
 /// Re-exports for the user module
 pub mod prelude_user {
-	pub use super::models::user::{InsertableUser, SearchableUser};
+    pub use super::models::user::{InsertableUser, SearchableUser};
 }
 
 /// Database pool re-exports
@@ -38,8 +38,8 @@ pub mod prelude_pool {
 
 /// Global re-exports
 pub mod prelude {
-	pub use super::tables::*;
-	pub use super::prelude_pool::*;
-	pub use super::prelude_user::*;
-	pub use super::prelude_grower::*;
+    pub use super::prelude_grower::*;
+    pub use super::prelude_pool::*;
+    pub use super::prelude_user::*;
+    pub use super::tables::*;
 }

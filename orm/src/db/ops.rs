@@ -1,6 +1,6 @@
-use crate::prelude::*;
 use super::pooling::pool::PoolConn;
 use crate::auto::users as user_t;
+use crate::prelude::*;
 use diesel::prelude::*;
 
 impl<'u> InsertableUser<'u> {
@@ -68,8 +68,7 @@ impl SearchableUser {
             .first(&mut conn)
             .optional()?;
         if let Some(user) = user {
-            diesel::delete(user_t::table.filter(user_t::id.eq(id)))
-                .execute(&mut conn)?;
+            diesel::delete(user_t::table.filter(user_t::id.eq(id))).execute(&mut conn)?;
             return Ok(Some(user));
         }
         return Ok(None);
