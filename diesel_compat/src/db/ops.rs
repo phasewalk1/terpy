@@ -13,16 +13,49 @@ impl<'u> NewUserCompat<'u> {
         return Ok(user.into());
     }
 }
-
-use crate::models::grower::{NewTestResults, TestResults};
-impl NewTestResults {
-    pub fn insert<T>(&self, mut conn: PoolConn<T>) -> Result<TestResults, diesel::result::Error>
+impl UserCompat {
+    pub fn by_email<T>(
+        email: String,
+        mut conn: PoolConn<T>,
+    ) -> Result<Option<UserCompat>, diesel::result::Error>
     where
         T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
     {
-        let test_results: TestResults = diesel::insert_into(crate::test_results_t::table)
-            .values(self)
-            .get_result(&mut conn)?;
-        return Ok(test_results.into());
+        let user: Option<UserCompat> = crate::user_t::table
+            .filter(crate::user_t::email.eq(email))
+            .first(&mut conn)
+            .optional()?;
+        return Ok(user);
+    }
+    pub fn by_id<T>(
+        id: i32,
+        mut conn: PoolConn<T>,
+    ) -> Result<Option<UserCompat>, diesel::result::Error>
+    where
+        T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
+    {
+        let user: Option<UserCompat> = crate::user_t::table
+            .filter(crate::user_t::id.eq(id))
+            .first(&mut conn)
+            .optional()?;
+        return Ok(user);
+    }
+    pub fn delete<T>(
+        id: i32,
+        mut conn: PoolConn<T>,
+    ) -> Result<Option<UserCompat>, diesel::result::Error>
+    where
+        T: diesel::r2d2::ManageConnection<Connection = diesel::pg::PgConnection>,
+    {
+        let user: Option<UserCompat> = crate::user_t::table
+            .filter(crate::user_t::id.eq(id))
+            .first(&mut conn)
+            .optional()?;
+        if let Some(user) = user {
+            diesel::delete(crate::user_t::table.filter(crate::user_t::id.eq(id)))
+                .execute(&mut conn)?;
+            return Ok(Some(user));
+        }
+        return Ok(None);
     }
 }

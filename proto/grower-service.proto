@@ -2,56 +2,115 @@ syntax = "proto3";
 package grower;
 
 message CannibanoidScreen {
-  float cbc = 1;
-  float cbd = 2;
-  float cbda = 3;
-  float cbdv = 4;
-  float cbg = 5;
-  float cbga = 6;
-  float cbn = 7;
-  float d9thc = 8;
-  float d8thc = 9;
-  float thcv = 10;
-  float thca = 11;
+  string id = 1;
+  string grower_id = 2;
+  string batch_id = 3;
+  float cbc = 4;
+  float cbd = 5;
+  float cbda = 6;
+  float cbdv = 7;
+  float cbg = 8;
+  float cbga = 9;
+  float cbn = 10;
+  float d9thc = 11;
+  float d8thc = 12;
+  float thcv = 13;
+  float thca = 14;
+}
+
+message NewCannibanoidScreen {
+  string grower_id = 1;
+  string batch_id = 2;
+  float cbc = 3;
+  float cbd = 4;
+  float cbda = 5;
+  float cbdv = 6;
+  float cbg = 7;
+  float cbga = 8;
+  float cbn = 9;
+  float d9thc = 10;
+  float d8thc = 11;
+  float thcv = 12;
+  float thca = 13;
 }
 
 message TerpenoidScreen {
-  float a_bisabolol = 1;
-  float a_humulene = 2;
-  float a_pinene = 3;
-  float a_terpinene = 4;
-  float b_caryophyllene = 5;
-  float b_myrcene = 6;
-  float b_pinene = 7;
-  float camphene = 8;
-  float caryophyllene_oxide = 9;
-  float delta_3_carene = 10;
-  float gamma_terpinene = 11;
-  float geraniol = 12;
-  float guaiol = 13;
-  float isopulegol = 14;
-  float linalool = 15;
-  float trans_nerolidol = 16;
-  float ocimene = 17;
-  float p_cymene = 18;
-  float eucalyptol = 19;
-  float terpinolene = 20;
+  string id = 1;
+  string grower_id = 2;
+  string batch_id = 3;
+  float a_bisabolol = 4;
+  float a_humulene = 5;
+  float a_pinene = 6;
+  float a_terpinene = 7;
+  float b_caryophyllene = 8;
+  float b_myrcene = 9;
+  float b_pinene = 10;
+  float camphene = 11;
+  float caryophyllene_oxide = 12;
+  float delta_3_carene = 13;
+  float gamma_terpinene = 14;
+  float geraniol = 15;
+  float guaiol = 16;
+  float isopulegol = 17;
+  float linalool = 18;
+  float trans_nerolidol = 19;
+  float ocimene = 20;
+  float p_cymene = 21;
+  float eucalyptol = 22;
+  float terpinolene = 23;
+}
+
+message NewTerpenoidScreen {
+  string grower_id = 1;
+  string batch_id = 2;
+  float a_bisabolol = 3;
+  float a_humulene = 4;
+  float a_pinene = 5;
+  float a_terpinene = 6;
+  float b_caryophyllene = 7;
+  float b_myrcene = 8;
+  float b_pinene = 9;
+  float camphene = 10;
+  float caryophyllene_oxide = 11;
+  float delta_3_carene = 12;
+  float gamma_terpinene = 13;
+  float geraniol = 14;
+  float guaiol = 15;
+  float isopulegol = 16;
+  float linalool = 17;
+  float trans_nerolidol = 18;
+  float ocimene = 19;
+  float p_cymene = 20;
+  float eucalyptol = 21;
+  float terpinolene = 22;
 }
 
 message TestResults {
   string id = 1;
-  CannibanoidScreen cannibanoid_screen = 2;
-  TerpenoidScreen terpenoid_screen = 3;
+  string grower_id = 2;
+  string batch_id = 3;
+  CannibanoidScreen cannibanoid_screen = 4;
+  TerpenoidScreen terpenoid_screen = 5;
 }
 
 message NewTestResults {
-  CannibanoidScreen cannibanoid_screen = 1;
-  TerpenoidScreen terpenoid_screen = 2;
+  string grower_id = 1;
+  string batch_id = 2;
+  NewCannibanoidScreen cannibanoid_screen = 3;
+  NewTerpenoidScreen terpenoid_screen = 4;
+}
+
+message AssignTestResultsRequest {
+  string cann_id = 1;
+  string terp_id = 2;
+  string grower_id = 3;
+  string batch_id = 4;
 }
 
 message TestResultById { string id = 1; }
 
 service Grower {
   rpc CreateTestResults(NewTestResults) returns (TestResults);
+  rpc AssignTestResults(AssignTestResultsRequest) returns (TestResults);
   rpc GetTestResults(TestResultById) returns (TestResults);
 }

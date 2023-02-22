@@ -2,72 +2,164 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CannibanoidScreen {
-    #[prost(float, tag = "1")]
-    pub cbc: f32,
-    #[prost(float, tag = "2")]
-    pub cbd: f32,
-    #[prost(float, tag = "3")]
-    pub cbda: f32,
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub grower_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub batch_id: ::prost::alloc::string::String,
     #[prost(float, tag = "4")]
-    pub cbdv: f32,
+    pub cbc: f32,
     #[prost(float, tag = "5")]
-    pub cbg: f32,
+    pub cbd: f32,
     #[prost(float, tag = "6")]
-    pub cbga: f32,
+    pub cbda: f32,
     #[prost(float, tag = "7")]
-    pub cbn: f32,
+    pub cbdv: f32,
     #[prost(float, tag = "8")]
-    pub d9thc: f32,
+    pub cbg: f32,
     #[prost(float, tag = "9")]
-    pub d8thc: f32,
+    pub cbga: f32,
     #[prost(float, tag = "10")]
-    pub thcv: f32,
+    pub cbn: f32,
     #[prost(float, tag = "11")]
+    pub d9thc: f32,
+    #[prost(float, tag = "12")]
+    pub d8thc: f32,
+    #[prost(float, tag = "13")]
+    pub thcv: f32,
+    #[prost(float, tag = "14")]
+    pub thca: f32,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewCannibanoidScreen {
+    #[prost(string, tag = "1")]
+    pub grower_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub batch_id: ::prost::alloc::string::String,
+    #[prost(float, tag = "3")]
+    pub cbc: f32,
+    #[prost(float, tag = "4")]
+    pub cbd: f32,
+    #[prost(float, tag = "5")]
+    pub cbda: f32,
+    #[prost(float, tag = "6")]
+    pub cbdv: f32,
+    #[prost(float, tag = "7")]
+    pub cbg: f32,
+    #[prost(float, tag = "8")]
+    pub cbga: f32,
+    #[prost(float, tag = "9")]
+    pub cbn: f32,
+    #[prost(float, tag = "10")]
+    pub d9thc: f32,
+    #[prost(float, tag = "11")]
+    pub d8thc: f32,
+    #[prost(float, tag = "12")]
+    pub thcv: f32,
+    #[prost(float, tag = "13")]
     pub thca: f32,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TerpenoidScreen {
-    #[prost(float, tag = "1")]
-    pub a_bisabolol: f32,
-    #[prost(float, tag = "2")]
-    pub a_humulene: f32,
-    #[prost(float, tag = "3")]
-    pub a_pinene: f32,
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub grower_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub batch_id: ::prost::alloc::string::String,
     #[prost(float, tag = "4")]
-    pub a_terpinene: f32,
+    pub a_bisabolol: f32,
     #[prost(float, tag = "5")]
-    pub b_caryophyllene: f32,
+    pub a_humulene: f32,
     #[prost(float, tag = "6")]
-    pub b_myrcene: f32,
+    pub a_pinene: f32,
     #[prost(float, tag = "7")]
-    pub b_pinene: f32,
+    pub a_terpinene: f32,
     #[prost(float, tag = "8")]
-    pub camphene: f32,
+    pub b_caryophyllene: f32,
     #[prost(float, tag = "9")]
-    pub caryophyllene_oxide: f32,
+    pub b_myrcene: f32,
     #[prost(float, tag = "10")]
-    pub delta_3_carene: f32,
+    pub b_pinene: f32,
     #[prost(float, tag = "11")]
-    pub gamma_terpinene: f32,
+    pub camphene: f32,
     #[prost(float, tag = "12")]
-    pub geraniol: f32,
+    pub caryophyllene_oxide: f32,
     #[prost(float, tag = "13")]
-    pub guaiol: f32,
+    pub delta_3_carene: f32,
     #[prost(float, tag = "14")]
-    pub isopulegol: f32,
+    pub gamma_terpinene: f32,
     #[prost(float, tag = "15")]
-    pub linalool: f32,
+    pub geraniol: f32,
     #[prost(float, tag = "16")]
-    pub trans_nerolidol: f32,
+    pub guaiol: f32,
     #[prost(float, tag = "17")]
-    pub ocimene: f32,
+    pub isopulegol: f32,
     #[prost(float, tag = "18")]
-    pub p_cymene: f32,
+    pub linalool: f32,
     #[prost(float, tag = "19")]
-    pub eucalyptol: f32,
+    pub trans_nerolidol: f32,
     #[prost(float, tag = "20")]
+    pub ocimene: f32,
+    #[prost(float, tag = "21")]
+    pub p_cymene: f32,
+    #[prost(float, tag = "22")]
+    pub eucalyptol: f32,
+    #[prost(float, tag = "23")]
+    pub terpinolene: f32,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewTerpenoidScreen {
+    #[prost(string, tag = "1")]
+    pub grower_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub batch_id: ::prost::alloc::string::String,
+    #[prost(float, tag = "3")]
+    pub a_bisabolol: f32,
+    #[prost(float, tag = "4")]
+    pub a_humulene: f32,
+    #[prost(float, tag = "5")]
+    pub a_pinene: f32,
+    #[prost(float, tag = "6")]
+    pub a_terpinene: f32,
+    #[prost(float, tag = "7")]
+    pub b_caryophyllene: f32,
+    #[prost(float, tag = "8")]
+    pub b_myrcene: f32,
+    #[prost(float, tag = "9")]
+    pub b_pinene: f32,
+    #[prost(float, tag = "10")]
+    pub camphene: f32,
+    #[prost(float, tag = "11")]
+    pub caryophyllene_oxide: f32,
+    #[prost(float, tag = "12")]
+    pub delta_3_carene: f32,
+    #[prost(float, tag = "13")]
+    pub gamma_terpinene: f32,
+    #[prost(float, tag = "14")]
+    pub geraniol: f32,
+    #[prost(float, tag = "15")]
+    pub guaiol: f32,
+    #[prost(float, tag = "16")]
+    pub isopulegol: f32,
+    #[prost(float, tag = "17")]
+    pub linalool: f32,
+    #[prost(float, tag = "18")]
+    pub trans_nerolidol: f32,
+    #[prost(float, tag = "19")]
+    pub ocimene: f32,
+    #[prost(float, tag = "20")]
+    pub p_cymene: f32,
+    #[prost(float, tag = "21")]
+    pub eucalyptol: f32,
+    #[prost(float, tag = "22")]
     pub terpinolene: f32,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -76,19 +168,40 @@ pub struct TerpenoidScreen {
 pub struct TestResults {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "2")]
+    #[prost(string, tag = "2")]
+    pub grower_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub batch_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "4")]
     pub cannibanoid_screen: ::core::option::Option<CannibanoidScreen>,
-    #[prost(message, optional, tag = "3")]
+    #[prost(message, optional, tag = "5")]
     pub terpenoid_screen: ::core::option::Option<TerpenoidScreen>,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewTestResults {
-    #[prost(message, optional, tag = "1")]
-    pub cannibanoid_screen: ::core::option::Option<CannibanoidScreen>,
-    #[prost(message, optional, tag = "2")]
-    pub terpenoid_screen: ::core::option::Option<TerpenoidScreen>,
+    #[prost(string, tag = "1")]
+    pub grower_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub batch_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "3")]
+    pub cannibanoid_screen: ::core::option::Option<NewCannibanoidScreen>,
+    #[prost(message, optional, tag = "4")]
+    pub terpenoid_screen: ::core::option::Option<NewTerpenoidScreen>,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AssignTestResultsRequest {
+    #[prost(string, tag = "1")]
+    pub cann_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub terp_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub grower_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub batch_id: ::prost::alloc::string::String,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -185,6 +298,25 @@ pub mod grower_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        pub async fn assign_test_results(
+            &mut self,
+            request: impl tonic::IntoRequest<super::AssignTestResultsRequest>,
+        ) -> Result<tonic::Response<super::TestResults>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/AssignTestResults",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
         pub async fn get_test_results(
             &mut self,
             request: impl tonic::IntoRequest<super::TestResultById>,
@@ -216,6 +348,10 @@ pub mod grower_server {
         async fn create_test_results(
             &self,
             request: tonic::Request<super::NewTestResults>,
+        ) -> Result<tonic::Response<super::TestResults>, tonic::Status>;
+        async fn assign_test_results(
+            &self,
+            request: tonic::Request<super::AssignTestResultsRequest>,
         ) -> Result<tonic::Response<super::TestResults>, tonic::Status>;
         async fn get_test_results(
             &self,
@@ -308,6 +444,46 @@ pub mod grower_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = CreateTestResultsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/grower.Grower/AssignTestResults" => {
+                    #[allow(non_camel_case_types)]
+                    struct AssignTestResultsSvc<T: Grower>(pub Arc<T>);
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::AssignTestResultsRequest>
+                    for AssignTestResultsSvc<T> {
+                        type Response = super::TestResults;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::AssignTestResultsRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).assign_test_results(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = AssignTestResultsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

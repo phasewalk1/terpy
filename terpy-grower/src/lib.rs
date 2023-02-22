@@ -1,3 +1,6 @@
+use diesel_compat::models::grower::{
+    NewTestResults as NewTestResultsCompat, TestResults as TestResultsCompat,
+};
 use prostgen::services::Grower;
 use tonic::{Request, Response, Status};
 
@@ -10,6 +13,7 @@ impl Grower for GrowerService {
         &self,
         request: Request<prostgen::grower::NewTestResults>,
     ) -> Result<Response<prostgen::grower::TestResults>, Status> {
+        let new_test_results = NewTestResultsCompat::from(request.into_inner());
         todo!()
     }
 

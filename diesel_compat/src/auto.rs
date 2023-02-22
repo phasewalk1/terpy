@@ -1,8 +1,16 @@
 use diesel::allow_tables_to_appear_in_same_query;
 use diesel::table;
+use diesel::joinable;
+
+pub use self::cannibanoid_screen as cannibanoid_screen_t;
+pub use self::terpenoid_screen as terpenoid_screen_t;
+pub use self::test_results as test_results_t;
+
 table! {
-    test_results (id) {
-        id -> Text,
+    cannibanoid_screen (id) {
+        id -> Int4,
+        grower_id -> Varchar,
+        batch_id -> Varchar,
         cbc -> Float4,
         cbd -> Float4,
         cbda -> Float4,
@@ -14,6 +22,14 @@ table! {
         d8thc -> Float4,
         thcv -> Float4,
         thca -> Float4,
+    }
+}
+
+table! {
+    terpenoid_screen (id) {
+        id -> Int4,
+        grower_id -> Varchar,
+        batch_id -> Varchar,
         a_bisabolol -> Float4,
         a_humulene -> Float4,
         a_pinene -> Float4,
@@ -38,6 +54,16 @@ table! {
 }
 
 table! {
+    test_results (id) {
+        id -> Int4,
+        grower_id -> Varchar,
+        batch_id -> Varchar,
+        cann -> Nullable<Int4>,
+        terp -> Nullable<Int4>,
+    }
+}
+
+table! {
     users (id) {
         id -> Int4,
         name -> Varchar,
@@ -47,4 +73,12 @@ table! {
     }
 }
 
-allow_tables_to_appear_in_same_query!(test_results, users,);
+joinable!(test_results -> cannibanoid_screen (cann));
+joinable!(test_results -> terpenoid_screen (terp));
+
+allow_tables_to_appear_in_same_query!(
+    cannibanoid_screen,
+    terpenoid_screen,
+    test_results,
+    users,
+);
