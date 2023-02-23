@@ -2,7 +2,7 @@ use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
 /// An ORM insertable cannibanoid screen
-#[derive(Debug, Deserialize, Serialize, Insertable)]
+#[derive(Debug, Default, Deserialize, Serialize, Insertable)]
 #[diesel(table_name = crate::auto::cannibanoid_screen_t)]
 pub struct InsertableCannibanoidScreen {
     pub grower_id: String,
@@ -144,7 +144,7 @@ impl From<prostgen::grower::CannibanoidScreen> for SearchableCannibanoidScreen {
 }
 
 /// An ORM insertable terpenoid screen
-#[derive(Debug, Deserialize, Serialize, Insertable)]
+#[derive(Debug, Default, Deserialize, Serialize, Insertable)]
 #[diesel(table_name = crate::auto::terpenoid_screen_t)]
 pub struct InsertableTerpenoidScreen {
     pub grower_id: String,
@@ -269,6 +269,17 @@ pub struct InsertableTestResults {
     pub terp: i32,
 }
 
+impl From<prostgen::grower::NewTestResults> for InsertableTestResults {
+    fn from(results: prostgen::grower::NewTestResults) -> Self {
+        return Self {
+            grower_id: results.grower_id,
+            batch_id: results.batch_id,
+            cann: results.cannibanoid_screen_id,
+            terp: results.terpenoid_screen_id,
+        };
+    }
+}
+
 /// An ORM searchable test result
 #[derive(Debug, Deserialize, Serialize, Queryable)]
 #[diesel(table_name = crate::auto::test_results_t)]
@@ -278,4 +289,16 @@ pub struct SearchableTestResults {
     pub batch_id: String,
     pub cann: i32,
     pub terp: i32,
+}
+
+impl From<SearchableTestResults> for prostgen::grower::TestResults {
+    fn from(results: SearchableTestResults) -> Self {
+        return Self {
+            id: results.id.to_string(),
+            grower_id: results.grower_id,
+            batch_id: results.batch_id,
+            cannibanoid_screen_id: results.cann,
+            terpenoid_screen_id: results.terp,
+        };
+    }
 }

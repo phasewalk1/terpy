@@ -93,15 +93,15 @@ message TestResults {
   string id = 1;
   string grower_id = 2;
   string batch_id = 3;
-  CannibanoidScreen cannibanoid_screen = 4;
-  TerpenoidScreen terpenoid_screen = 5;
+  int32 cannibanoid_screen_id = 4;
+  int32 terpenoid_screen_id = 5;
 }
 
 message NewTestResults {
   string grower_id = 1;
   string batch_id = 2;
-  NewCannibanoidScreen cannibanoid_screen = 3;
-  NewTerpenoidScreen terpenoid_screen = 4;
+  int32 cannibanoid_screen_id = 3;
+  int32 terpenoid_screen_id = 4;
 }
 
 message AssignTestResultsRequest {

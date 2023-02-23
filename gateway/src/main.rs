@@ -1,12 +1,20 @@
 #[macro_use]
 extern crate rocket;
+extern crate terpy_orm;
+extern crate rocket_governor;
+use rocket_governor::rocket_governor_catcher as throttle_catcher;
+use terpy_orm::prelude_pool::POOL_R;
+use terpy_orm::db::pooling::rocket_wrapper::init_pool;
 
+mod limiter;
 mod router;
+mod auth;
 
 #[launch]
 fn rocket() -> _ {
+    let pool: POOL_R = init_pool(); 
     rocket::build()
-        .mount("/", routes![router::index])
+        .mount("/", routes![router::post_login])
         .mount(
             "/user",
             routes![router::user::create_user, router::user::get_user_by_id],
@@ -15,9 +23,14 @@ fn rocket() -> _ {
             "/grower",
             routes![
                 router::grower::create_cannibanoid_screen,
-                router::grower::create_terpenoid_screen
+                router::grower::create_terpenoid_screen,
+                router::grower::get_cannibanoid_screen,
+                router::grower::get_terpenoid_screen
             ],
         )
+        .attach(rocket_dyn_templates::Template::fairing())
+        .manage(pool)
+        .register("/", catchers![throttle_catcher])
 }
 
 #[cfg(test)]

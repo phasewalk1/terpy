@@ -53,3 +53,48 @@ pub mod extension_user_by_id {
         }
     }
 }
+
+pub mod extension_cannibanoid_by_id {
+    #[rocket::async_trait]
+    impl<'r> rocket::request::FromRequest<'r> for crate::grower::CannibanoidScreenById {
+        type Error = ();
+        async fn from_request(
+            request: &'r rocket::request::Request<'_>,
+        ) -> rocket::request::Outcome<Self, Self::Error> {
+            // get the user id from the request
+            let id = request
+                .headers()
+                .get_one("id")
+                .unwrap_or("-1")
+                .parse::<i32>()
+                .unwrap_or(-1);
+            match id {
+                -1 => rocket::request::Outcome::Failure((rocket::http::Status::BadRequest, ())),
+                _ => rocket::request::Outcome::Success(crate::grower::CannibanoidScreenById {
+                    id: id.to_string(),
+                }),
+            }
+        }
+    }
+    #[rocket::async_trait]
+    impl<'r> rocket::request::FromRequest<'r> for crate::grower::TerpenoidScreenById {
+        type Error = ();
+        async fn from_request(
+            request: &'r rocket::request::Request<'_>,
+        ) -> rocket::request::Outcome<Self, Self::Error> {
+            // get the user id from the request
+            let id = request
+                .headers()
+                .get_one("id")
+                .unwrap_or("-1")
+                .parse::<i32>()
+                .unwrap_or(-1);
+            match id {
+                -1 => rocket::request::Outcome::Failure((rocket::http::Status::BadRequest, ())),
+                _ => rocket::request::Outcome::Success(crate::grower::TerpenoidScreenById {
+                    id: id.to_string(),
+                }),
+            }
+        }
+    }
+}

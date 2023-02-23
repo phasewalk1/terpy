@@ -186,10 +186,10 @@ pub struct TestResults {
     pub grower_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub batch_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "4")]
-    pub cannibanoid_screen: ::core::option::Option<CannibanoidScreen>,
-    #[prost(message, optional, tag = "5")]
-    pub terpenoid_screen: ::core::option::Option<TerpenoidScreen>,
+    #[prost(int32, tag = "4")]
+    pub cannibanoid_screen_id: i32,
+    #[prost(int32, tag = "5")]
+    pub terpenoid_screen_id: i32,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -199,10 +199,10 @@ pub struct NewTestResults {
     pub grower_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub batch_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub cannibanoid_screen: ::core::option::Option<NewCannibanoidScreen>,
-    #[prost(message, optional, tag = "4")]
-    pub terpenoid_screen: ::core::option::Option<NewTerpenoidScreen>,
+    #[prost(int32, tag = "3")]
+    pub cannibanoid_screen_id: i32,
+    #[prost(int32, tag = "4")]
+    pub terpenoid_screen_id: i32,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -227,8 +227,8 @@ pub struct TestResultById {
 /// Generated client implementations.
 pub mod grower_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::http::Uri;
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
     pub struct GrowerClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -272,8 +272,9 @@ pub mod grower_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
         {
             GrowerClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -296,99 +297,133 @@ pub mod grower_client {
             &mut self,
             request: impl tonic::IntoRequest<super::NewCannibanoidScreen>,
         ) -> Result<tonic::Response<super::CannibanoidScreen>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/grower.Grower/CreateCannibanoidScreen");
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/CreateCannibanoidScreen",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn get_cannibanoid_screen(
             &mut self,
             request: impl tonic::IntoRequest<super::CannibanoidScreenById>,
         ) -> Result<tonic::Response<super::CannibanoidScreen>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/grower.Grower/GetCannibanoidScreen");
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/GetCannibanoidScreen",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn create_terpenoid_screen(
             &mut self,
             request: impl tonic::IntoRequest<super::NewTerpenoidScreen>,
         ) -> Result<tonic::Response<super::TerpenoidScreen>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/grower.Grower/CreateTerpenoidScreen");
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/CreateTerpenoidScreen",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn get_terpenoid_screen(
             &mut self,
             request: impl tonic::IntoRequest<super::TerpenoidScreenById>,
         ) -> Result<tonic::Response<super::TerpenoidScreen>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/grower.Grower/GetTerpenoidScreen");
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/GetTerpenoidScreen",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn create_test_results(
             &mut self,
             request: impl tonic::IntoRequest<super::NewTestResults>,
         ) -> Result<tonic::Response<super::TestResults>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/grower.Grower/CreateTestResults");
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/CreateTestResults",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn assign_test_results(
             &mut self,
             request: impl tonic::IntoRequest<super::AssignTestResultsRequest>,
         ) -> Result<tonic::Response<super::TestResults>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/grower.Grower/AssignTestResults");
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/AssignTestResults",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
         pub async fn get_test_results(
             &mut self,
             request: impl tonic::IntoRequest<super::TestResultById>,
         ) -> Result<tonic::Response<super::TestResults>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/grower.Grower/GetTestResults");
+            let path = http::uri::PathAndQuery::from_static(
+                "/grower.Grower/GetTestResults",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -448,7 +483,10 @@ pub mod grower_server {
                 send_compression_encodings: Default::default(),
             }
         }
-        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -476,7 +514,10 @@ pub mod grower_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -485,18 +526,23 @@ pub mod grower_server {
                 "/grower.Grower/CreateCannibanoidScreen" => {
                     #[allow(non_camel_case_types)]
                     struct CreateCannibanoidScreenSvc<T: Grower>(pub Arc<T>);
-                    impl<T: Grower> tonic::server::UnaryService<super::NewCannibanoidScreen>
-                        for CreateCannibanoidScreenSvc<T>
-                    {
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::NewCannibanoidScreen>
+                    for CreateCannibanoidScreenSvc<T> {
                         type Response = super::CannibanoidScreen;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::NewCannibanoidScreen>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut =
-                                async move { (*inner).create_cannibanoid_screen(request).await };
+                            let fut = async move {
+                                (*inner).create_cannibanoid_screen(request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -507,10 +553,11 @@ pub mod grower_server {
                         let inner = inner.0;
                         let method = CreateCannibanoidScreenSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -519,17 +566,23 @@ pub mod grower_server {
                 "/grower.Grower/GetCannibanoidScreen" => {
                     #[allow(non_camel_case_types)]
                     struct GetCannibanoidScreenSvc<T: Grower>(pub Arc<T>);
-                    impl<T: Grower> tonic::server::UnaryService<super::CannibanoidScreenById>
-                        for GetCannibanoidScreenSvc<T>
-                    {
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::CannibanoidScreenById>
+                    for GetCannibanoidScreenSvc<T> {
                         type Response = super::CannibanoidScreen;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::CannibanoidScreenById>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).get_cannibanoid_screen(request).await };
+                            let fut = async move {
+                                (*inner).get_cannibanoid_screen(request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -540,10 +593,11 @@ pub mod grower_server {
                         let inner = inner.0;
                         let method = GetCannibanoidScreenSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -552,18 +606,23 @@ pub mod grower_server {
                 "/grower.Grower/CreateTerpenoidScreen" => {
                     #[allow(non_camel_case_types)]
                     struct CreateTerpenoidScreenSvc<T: Grower>(pub Arc<T>);
-                    impl<T: Grower> tonic::server::UnaryService<super::NewTerpenoidScreen>
-                        for CreateTerpenoidScreenSvc<T>
-                    {
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::NewTerpenoidScreen>
+                    for CreateTerpenoidScreenSvc<T> {
                         type Response = super::TerpenoidScreen;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::NewTerpenoidScreen>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut =
-                                async move { (*inner).create_terpenoid_screen(request).await };
+                            let fut = async move {
+                                (*inner).create_terpenoid_screen(request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -574,10 +633,11 @@ pub mod grower_server {
                         let inner = inner.0;
                         let method = CreateTerpenoidScreenSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -586,17 +646,23 @@ pub mod grower_server {
                 "/grower.Grower/GetTerpenoidScreen" => {
                     #[allow(non_camel_case_types)]
                     struct GetTerpenoidScreenSvc<T: Grower>(pub Arc<T>);
-                    impl<T: Grower> tonic::server::UnaryService<super::TerpenoidScreenById>
-                        for GetTerpenoidScreenSvc<T>
-                    {
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::TerpenoidScreenById>
+                    for GetTerpenoidScreenSvc<T> {
                         type Response = super::TerpenoidScreen;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::TerpenoidScreenById>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).get_terpenoid_screen(request).await };
+                            let fut = async move {
+                                (*inner).get_terpenoid_screen(request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -607,10 +673,11 @@ pub mod grower_server {
                         let inner = inner.0;
                         let method = GetTerpenoidScreenSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -619,15 +686,21 @@ pub mod grower_server {
                 "/grower.Grower/CreateTestResults" => {
                     #[allow(non_camel_case_types)]
                     struct CreateTestResultsSvc<T: Grower>(pub Arc<T>);
-                    impl<T: Grower> tonic::server::UnaryService<super::NewTestResults> for CreateTestResultsSvc<T> {
+                    impl<T: Grower> tonic::server::UnaryService<super::NewTestResults>
+                    for CreateTestResultsSvc<T> {
                         type Response = super::TestResults;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::NewTestResults>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).create_test_results(request).await };
+                            let fut = async move {
+                                (*inner).create_test_results(request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -638,10 +711,11 @@ pub mod grower_server {
                         let inner = inner.0;
                         let method = CreateTestResultsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -650,17 +724,23 @@ pub mod grower_server {
                 "/grower.Grower/AssignTestResults" => {
                     #[allow(non_camel_case_types)]
                     struct AssignTestResultsSvc<T: Grower>(pub Arc<T>);
-                    impl<T: Grower> tonic::server::UnaryService<super::AssignTestResultsRequest>
-                        for AssignTestResultsSvc<T>
-                    {
+                    impl<
+                        T: Grower,
+                    > tonic::server::UnaryService<super::AssignTestResultsRequest>
+                    for AssignTestResultsSvc<T> {
                         type Response = super::TestResults;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::AssignTestResultsRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).assign_test_results(request).await };
+                            let fut = async move {
+                                (*inner).assign_test_results(request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -671,10 +751,11 @@ pub mod grower_server {
                         let inner = inner.0;
                         let method = AssignTestResultsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -683,15 +764,21 @@ pub mod grower_server {
                 "/grower.Grower/GetTestResults" => {
                     #[allow(non_camel_case_types)]
                     struct GetTestResultsSvc<T: Grower>(pub Arc<T>);
-                    impl<T: Grower> tonic::server::UnaryService<super::TestResultById> for GetTestResultsSvc<T> {
+                    impl<T: Grower> tonic::server::UnaryService<super::TestResultById>
+                    for GetTestResultsSvc<T> {
                         type Response = super::TestResults;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::TestResultById>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).get_test_results(request).await };
+                            let fut = async move {
+                                (*inner).get_test_results(request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -702,23 +789,28 @@ pub mod grower_server {
                         let inner = inner.0;
                         let method = GetTestResultsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
                 }
-                _ => Box::pin(async move {
-                    Ok(http::Response::builder()
-                        .status(200)
-                        .header("grpc-status", "12")
-                        .header("content-type", "application/grpc")
-                        .body(empty_body())
-                        .unwrap())
-                }),
+                _ => {
+                    Box::pin(async move {
+                        Ok(
+                            http::Response::builder()
+                                .status(200)
+                                .header("grpc-status", "12")
+                                .header("content-type", "application/grpc")
+                                .body(empty_body())
+                                .unwrap(),
+                        )
+                    })
+                }
             }
         }
     }
